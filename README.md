@@ -1,2 +1,1 @@
-# SHI-DT-Campus
 
