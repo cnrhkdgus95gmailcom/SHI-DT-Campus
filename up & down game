@@ -1,6 +1,6 @@
 import random
 
-com_ran_num = random.randint(1,100) 
+com_ran_num = random.randint(1,100) # randint는 a이상~b이하. range는 a이상~b미만.
 count = 0
 
 while count != 5:
