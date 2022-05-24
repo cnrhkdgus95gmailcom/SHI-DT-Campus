@@ -1,0 +1,16 @@
+import random
+
+while True:
+    numOfgame=int(input('몇 게임?: '))
+    check = []    
+    중복 = 0
+    while len(check)!=numOfgame:     
+        game = random.sample(range(1,46),6)
+        game.sort()
+        if game not in check: 
+            check.append(game)
+            print(game)
+        else:
+            중복+=1
+        
+    print(f'{중복}개의 중복 결과가 대체됨.')
