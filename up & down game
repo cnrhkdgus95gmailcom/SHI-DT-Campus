@@ -1,6 +1,6 @@
 import random
 
-com_ran_num = random.randint(1,100) # randint는 a이상~b이하. range는 a이상~b미만.
+com_ran_num = random.randint(1,100) 
 count = 0
 
 while count != 5:
@@ -17,7 +17,8 @@ while count != 5:
         count += 1
     
 if count < 5:
-    print(f"정답입니다. {count}번 만에 맞추셨습니다.")
+    print(f"정답입니다. {count+1}번 만에 맞추셨습니다.")
 
 else:
     print(f"5번 틀렸습니다. 정답은 {com_ran_num}. 게임을 종료합니다.")
+
