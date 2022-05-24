@@ -8,7 +8,7 @@ def solution(s):
             boxIndex.append(i)
 
     list1 = s.split()
-    box = [] # 빈 리스트는 웬만하면 만들어야겠다...
+    box = [] 
 
     for i in range(len(list1)):      
         for j in range(len(list1[i])):# list1[i] is string now.
