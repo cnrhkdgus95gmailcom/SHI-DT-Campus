@@ -1,8 +1,7 @@
 import random
 
-com_ran_num = random.randint(1,100)
+com_ran_num = random.randint(1,100) 
 count = 0
-check = 0
 
 while count != 5:
 
@@ -11,17 +10,14 @@ while count != 5:
     if com_ran_num > user_num:
         print("UP. 컴퓨터의 숫자가 더 큽니다")
         count += 1
-        check += 0
-
     elif com_ran_num == user_num:
         break
     else:
-        print("Donw. 컴퓨터의 숫자가 더 작습니다")
+        print("Down. 컴퓨터의 숫자가 더 작습니다")
         count += 1
-        check += 0
-
+    
 if count < 5:
-    print("정답입니다. {}번 만에 맞추셨습니다.".format(count))
+    print(f"정답입니다. {count}번 만에 맞추셨습니다.")
 
 else:
-    print("5번 틀렸습니다. 게임종료")
+    print(f"5번 틀렸습니다. 정답은 {com_ran_num}. 게임을 종료합니다.")
