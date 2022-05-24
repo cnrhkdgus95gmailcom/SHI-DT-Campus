@@ -1,0 +1,26 @@
+def solution(s):
+    
+    boxOfspaces = [] 
+    for i in range(len(s)):
+        if s[i] == ' ':
+            boxOfspaces.append(i)
+
+    splitList = s.split()
+    boxOfwords = []
+
+    for i in range(len(splitList)):      
+        for j in range(len(splitList[i])):
+            if j % 2 == 0:
+                boxOfwords.append(splitList[i][j].upper())
+            else:
+                boxOfwords.append(splitList[i][j].lower())
+
+    for i in (boxOfspaces):
+        boxOfwords.insert(i,' ')
+
+    answer = "".join(boxOfwords)
+  
+    return answer
+
+s = "Make Strange Word"
+solution(s)
