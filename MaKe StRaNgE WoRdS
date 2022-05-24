@@ -22,5 +22,5 @@ def solution(s):
   
     return answer
 
-s = "Make Strange Word"
+s = "Make Strange Words"
 solution(s)
