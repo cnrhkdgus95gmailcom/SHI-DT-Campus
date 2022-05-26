@@ -1,0 +1,26 @@
+# 1에서부터 6까지의 눈을 가진 3개의 주사위를 던져서....
+
+# 1.같은 눈이 3개가 나오면 10,000원 + (같은 눈)x1000원 의 상금
+# 2. 같은 눈이 2개만 나오는 경우 1000원 + (같은 눈)x100원
+# 3. 모두 다른 눈 ; (그 중 가장 큰 눈)x100원
+
+# 3,3,6 천 + 삼백
+# 2,2,2 만 + 이천
+# 6,2,5 육백
+
+user = []
+for i in range(3):
+ user.append(int(input("1이상 6이하의 정수를 고르세요:")))
+
+if user[0] == user[1] and user [1] == user [2]:
+    print(f"답은{10000 + 1000*user[0]}")
+elif user[0] != user[1] and user[1] != user[2]:
+    user.sort()
+    print(f"답은{100 * user[2]}")
+else:
+    if user[0] == user [1]:
+        print(f"답은{1000 + 100*user[0]}")
+    elif user[0] == user [2]:
+        print(f"답은{1000 + 100*user[0]}")
+    else:
+        print(f"답은{1000 + 100*user[1]}")
