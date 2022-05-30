@@ -1,0 +1,59 @@
+import random
+import pickle
+
+while True:
+    print("새 게임 시작!")
+    try:
+        f = open('save.txt','rb')
+        save = pickle.load(f)
+        f.close()
+    except:
+        save = []
+
+    com = (random.sample(range(1,10),3)) 
+    
+    ctr = 0
+    while ctr != 10:
+        ctr += 1
+        
+        if ctr == 1:
+            print("1이상 9이하의 서로 다른 자연수 3개를 x,y,z 형식으로 입력해 주세요.")
+
+        print(f"try no.{ctr}.")
+        u = input("x,y,z: ").split(',')
+
+        ulst = list(map(int,u))
+        # [1, 2, 3] when user 1,2,3
+
+        def ballOrOut(a, b):
+            if a not in com:
+                return "O"
+            else: 
+                return "B"
+
+        def compare(a, b):
+            if a == b:
+                return "S"
+            else:
+                return ballOrOut(a, b)
+
+        box = []
+        for i in range(len(com)):
+            box.append( compare( ulst[i], com[i] ) )
+
+        print(f"{box.count('S')} strike, {box.count('B')} ball, {box.count('O')} out. ")
+
+        if box.count('S') == 3:
+            print(f"3 Strike! {ctr}번 만에 성공했습니다.")
+            break
+    
+    if ctr == 10:
+        print("10번 동안 성공하지 못했습니다")
+
+    save.append(ctr)
+    save.sort()
+    print(f'지금까지 최고 기록:{min(save)}번만에 맞춤')
+    print()
+    f = open('save.txt','wb')
+    pickle.dump(save, f)
+    f.close()
