@@ -1,1 +1,55 @@
-uploading
+def solution(record):
+
+    #["Enter uid1234 Muzi", 
+    # "Enter uid4567 Prodo",
+    # "Leave uid1234",
+    # "Enter uid1234 Prodo",
+    # "Change uid4567 Ryan"]
+    
+    r = []
+    for i in record:
+        r.append(i.split(' '))
+
+    for i in range(len(r)):
+        if r[i][0][0] == 'L':
+            r[i].append('나간놈')
+    
+    #[['Enter', 'uid1234', 'Muzi'], 
+    # ['Enter', 'uid4567', 'Prodo'], 
+    # ['Leave', 'uid1234', '나간놈'], 
+    # ['Enter', 'uid1234', 'Prodo'], 
+    # ['Change', 'uid4567', 'Ryan']]
+    
+    # 구해야 하는 최종 결과는 " 닉네임 님이 (E or L) " 임.
+    # 이를 " f(uid) 님이 (E or L) "로 구현해보자.
+    # 모든 유저는 중복되지 않는(서로 다른) uid를 가진다.
+    # 딕셔너리도 key 중복을 허용하지 않으므로, 딕셔너리로 f()를 구현해보자.
+    
+    id = [] # key
+    for i in r:
+        id.append(i[1])
+
+    name = [] # value
+    for i in r:
+        name.append(i[2])
+
+    dicT = {}
+    for i, j in zip(id, name):
+        if j == '나간놈':
+            continue  # Leave는 name에 영향을 주지 못하므로 넘긴다.
+        dicT[i] = j 
+        
+        # key = id, value = name
+        # 딕셔너리는 key 중복을 허용하지 않으므로 key에 assign되는 value는 가장 마지막(최신) 값임.
+        # 따라서 가장 마지막에 Enter 또는 Change된 name이 id에 assign됨.
+   
+    ans = []
+    for i in range(len(r)):
+        if r[i][0][0] != 'C': 
+        # Change는 출력되지 않으므로 넘긴다.
+            if r[i][0][0] == 'E':
+                ans.append(f"{dicT[r[i][1]]}님이 들어왔습니다.") 
+            else:
+                ans.append(f"{dicT[r[i][1]]}님이 나갔습니다.")
+
+    return ans
