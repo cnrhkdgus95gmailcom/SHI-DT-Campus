@@ -1,0 +1,42 @@
+import numpy as np
+import cv2
+
+img =  np.zeros((600, 600, 3), dtype=np.uint8)
+
+preview = None
+drawFlag = False
+initialPoint = (-1, -1)
+initialPoint2 = (-1, -1)
+
+def drawLine(event,x,y,flags,param):
+    global initialPoint,initialPoint2,drawFlag,img, preview
+    if event == cv2.EVENT_LBUTTONDOWN:
+        if drawFlag==False:
+            initialPoint = (x,y)
+            drawFlag=True
+            preview = img.copy()
+        else:
+            initialPoint2=(x,y)
+            cv2.line(img,initialPoint,initialPoint2,(255,255,255),5)
+            drawFlag=False
+            preview = None
+        
+    elif event == cv2.EVENT_MOUSEMOVE:
+        if preview is not None:
+            preview = img.copy()
+            cv2.line(preview, initialPoint, (x,y), (255,255,255), 5)
+       
+cv2.namedWindow("image")
+cv2.setMouseCallback("image", drawLine)
+
+while (True):
+
+    if preview is None:
+      cv2.imshow('image',img)
+    else :
+      cv2.imshow('image',preview)
+    k = cv2.waitKey(1) & 0xFF
+    if k == 27:
+      break
+
+cv2.destroyAllWindows()
