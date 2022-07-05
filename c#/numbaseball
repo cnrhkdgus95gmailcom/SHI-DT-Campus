@@ -1,0 +1,128 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace NumBaseBallGame
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            #region 숫자야구게임 규칙 출력
+            Console.WriteLine("숫자야구 게임을 시작합니다.");
+            Console.WriteLine("");
+            Console.WriteLine("★규칙★");
+            Console.WriteLine("9회차 안에 각 자리 숫자를 맞추어 3스트라이크 달성!");
+            Console.WriteLine("");
+            #endregion
+
+            #region 각 자리의 숫자가 중복이 아닌 3자리 자연수 생성
+            Random rand = new Random();
+            int num_100 = 0;
+            int num_10 = 0;
+            int num_1 = 0;
+
+            // 숫자 3개 중에 2개가 같은지 검사하는 경우의 수는 3임.
+            // 3가지 경우 중 하나라도 만족(중복 숫자 발생)하면 다시 반복함.
+            // 각 자리의 숫자가 서로 중복이 아니면 반복이 끝남.
+            while (num_1 == num_10 || num_1 == num_100 || num_10 == num_100) 
+            {
+                num_100 = rand.Next(1, 10); // 1이상 10 미만 정수를 랜덤하게 고른다.
+                num_10 = rand.Next(1, 10);
+                num_1 = rand.Next(1, 10);
+            }
+            #endregion
+
+            // string으로 만들어서 [0],[1],[2] 비교할 예정임.
+            string randNum_string = num_100.ToString() + num_10.ToString() + num_1.ToString(); 
+            string userNum_string = "012";
+            
+            // 반복문 내에서 승리한 경우 True로 바뀜.
+            bool winCheck = false;
+
+            #region 1회차~9회차 반복문
+            int numOftry = 0;           
+            while (numOftry != 9) // 0~8 이므로 총 9회 반복.
+            {
+                numOftry++; // 1~9
+                Console.WriteLine("숫자야구 {0}회차", numOftry); // 1~9회차
+
+                #region 입력 및 검사
+                while (true) // 잘못된 입력이면 continue, 올바른 입력이면 break
+                {
+                    Console.Write("각 자리의 수가 중복되지 않는 3자리 자연수 입력 : ");
+                    userNum_string = Console.ReadLine();
+
+                    int test = 0;
+                    int.TryParse(userNum_string, out test);                  
+                    if (test == 0) // 입력이 숫자로만 이루어지지 않은 경우.
+                    {
+                        Console.WriteLine("숫자가 아닌 입력이 있습니다. 다시 입력해 주세요. \n");
+                        continue;
+                    }                  
+                    else if (userNum_string.Length != 3) // 숫자로만 이루어진 입력이지만 길이가 3이 아님.
+                    {
+                        Console.WriteLine("3자리 숫자가 아닙니다. 다시 입력해 주세요. \n");
+                        continue;
+                    }                   
+                    else if (userNum_string[0] == userNum_string[1] 
+                        || userNum_string[0] == userNum_string[2] 
+                        || userNum_string[1] == userNum_string[2]) // 숫자로 이루어진 길이가 3인 입력이지만, 중복된 숫자가 있음.
+                    {
+                        Console.WriteLine("중복된 숫자가 있습니다. 다시 입력해 주세요. \n");
+                        continue;
+                    }
+                    
+                    // 조건 모두 충족하는 올바른 입력일때 검사 반복문 탈출
+                    else                   
+                        break;                    
+                }
+                #endregion
+
+                // 각 회차마다 스트라이크, 볼 초기화
+                int strike = 0;
+                int ball = 0;
+
+                #region 스트라이크, 볼 판별
+                for (int i = 0; i < 3; i++)
+                {
+                    if (userNum_string[i] == randNum_string[i])
+                        strike++;
+                    else
+                    {
+                        // 숫자는 같지만 다른 위치에 존재하는 경우
+                        if (randNum_string.Contains(userNum_string[i]))
+                        {
+                            ball++;
+                        }
+                    }    
+                }
+                #endregion
+
+                Console.WriteLine("{0} 스트라이크 {1} 볼",strike,ball);
+                Console.WriteLine("");
+                
+                // 3 스트라이크인 경우 회차 반복문 탈출.
+                if (strike == 3) 
+                {
+                    winCheck = true;
+                    Console.WriteLine($"★ 게임 승리!");
+                    break;
+                }
+            }
+            #endregion
+
+            // 1~9회차 전부 3스트라이크 못 맞춘 경우에만 패배 출력.
+            if (winCheck == false)
+            {
+                Console.WriteLine("★ 아쉽지만 패배!");
+                Console.WriteLine($"정답은 {randNum_string}이었습니다.");
+            }
+
+            // 콘솔창 강제 종료 방지
+            Console.WriteLine("종료 하시려면 아무 키나 누르세요."); Console.ReadKey();
+        }
+    }
+}
